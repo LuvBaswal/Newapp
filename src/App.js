@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Navbar from "./Components/Navbar";
+import News from "./Components/News";
+import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
+import LoadingBar from 'react-top-loading-bar'
+
 
 function App() {
+  const [Progress, setProgress] = useState(0);
+
+  const SetProgress = (Progress)=>{
+    setProgress(Progress + 10)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Router>
+       <LoadingBar
+        color='#f11946'
+        progress={Progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+       <Navbar/>
+       
+       <Routes>
+          <Route exact path="/" element={<News setprogress={SetProgress} key="Business" Catagory="Business"/>}/>
+          <Route exact path="/Sports" element={<News setprogress={SetProgress}key="Sports" Catagory="Sports"/>}/>
+          <Route exact path="/Politics" element={<News setprogress={SetProgress}key="Politics" Catagory="Politics"/>}/>
+          <Route exact path="/Entertainment" element={<News setprogress={SetProgress}key="Entertainment" Catagory="Entertainment"/>}/>
+          <Route exact path="/General" element={<News setprogress={SetProgress}key="General" Catagory="General"/>}/>
+          <Route exact path="/Health" element={<News setprogress={SetProgress}key="Health" Catagory="Health"/>}/>
+          <Route exact path="/Science" element={<News setprogress={SetProgress}key="Science" Catagory="Science"/>}/>
+          <Route exact path="/Technology" element={<News setprogress={SetProgress}key="Technology" Catagory="Technology"/>}/>
+          
+        </Routes>
+       </Router>
     </div>
   );
 }
